@@ -1,0 +1,29 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: Redis-log
+  profiles:
+    active: dev #
+  data:
+    user:
+      age: 108
+  redis:   #Redis配置
+    database: 0       # 数据库索引
+    host: 127.0.0.1   # Redis服务器IP
+    port: 6379        # Redis服务器连接端口
+    password: passwd  # 连接密码（默认为空）
+    jedis:
+      pool:
+        max-active: 8   # 连接池最大连接数
+        max-wait: -1ms  # 连接池最大阻塞
+        max-idle: 8     # 连接池中的最大空闲连接
+        min-idle: 0     # 连接池中的最小空闲连接
+    timeout: 300s       # 连接超时时间
+  output:
+    ansi:
+      enabled: ALWAYS  #NEVER: 禁用, DETECT会检查终端是否支持ANSI，是的话就采用彩色输出（推荐项）, ALWAYS：总是使用
+logging:
+  config:
+    classpath: logback-spring.xml
+    path: /home/g-m/logs/${spring.application.name}

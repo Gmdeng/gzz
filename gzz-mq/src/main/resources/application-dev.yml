@@ -1,0 +1,6 @@
+server:
+  port: 9999
+spring:
+  data:
+    user:
+      age: 332
