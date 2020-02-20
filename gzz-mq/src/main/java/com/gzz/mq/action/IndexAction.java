@@ -2,11 +2,13 @@ package com.gzz.mq.action;
 
 import com.gzz.mq.jms.JMSConfig;
 import com.gzz.mq.jms.PayProducer;
+import com.gzz.mq.jms.TransactionProducer;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -27,6 +29,33 @@ public class IndexAction {
     private String age;
     @Autowired
     private PayProducer payProducer;
+    @Autowired
+    private TransactionProducer transactionProducer;
+
+
+    /**
+     * 事务同步发送
+     * /api/v1/transSync?text=tageeee&otherParam=10
+     * @param text
+     * @return
+     * @throws InterruptedException
+     * @throws RemotingException
+     * @throws MQClientException
+     * @throws MQBrokerException
+     */
+    @RequestMapping("/api/v1/transSync")
+    public Object transSyncSend(String text,String otherParam) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
+        // 为保证重试，消息要设置唯一的KEY值。
+        Message msg = new Message(JMSConfig.TOPIC, "TagA", UUID.randomUUID().toString(), ("Hello G-m Studio." + text).getBytes());
+        // Message msg = new Message(JMSConfig.TOPIC, "taga",("Hello G-m Studio." + text).getBytes());
+        SendResult sendResult = null;
+
+
+        sendResult = transactionProducer.getProducer().sendMessageInTransaction(msg, otherParam);
+        System.out.printf(sendResult.toString());
+
+        return "OK";
+    }
 
     /**
      * 同步发送
