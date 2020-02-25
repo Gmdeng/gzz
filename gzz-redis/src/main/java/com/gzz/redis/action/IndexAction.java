@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Base64;
+import java.util.concurrent.TimeUnit;
+
 /**
  *
  */
@@ -25,6 +28,15 @@ public class IndexAction {
     @GetMapping("/index")
     public String index() {
         logger.info("Hellow............................................");
+
+        String basestr = Base64.getEncoder().encodeToString("我是一个好人".getBytes());
+        System.out.println(basestr);
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         try {
             this.redisTemplate.opsForValue().set("HETST", "Ricky Deng");
             this.valueOperations.set("name", "Ricky");
