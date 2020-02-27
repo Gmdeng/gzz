@@ -1,5 +1,8 @@
 package com.gzz.console.utils;
 
+/**
+ * 分布式雪花单号
+ */
 public class SnowflakeIdWorker {
     // ==============================Fields===========================================
     /** 开始时间截 (2015-01-01) */

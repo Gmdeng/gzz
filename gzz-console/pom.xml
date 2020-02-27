@@ -10,37 +10,20 @@
 	<groupId>com.gzz.gzzconsole</groupId>
 	<artifactId>gzz-console</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 	<name>gzz-console</name>
 	<description>Gzz console project for Spring Boot</description>
-
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
+	<!-- 本项目依赖 -->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
 </project>
