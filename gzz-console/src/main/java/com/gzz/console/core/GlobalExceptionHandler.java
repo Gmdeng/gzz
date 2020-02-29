@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,6 +14,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理
@@ -54,6 +59,45 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ErrorResponseEntity(400, exception.getMessage());
     }
 
+    /**
+     * 捕获  BindException 异常
+     *  一般的参数绑定时抛出异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(BindException.class)
+    public ErrorResponseEntity handleBindException(BindException ex) {
+        List<String> defaultMsg = ex.getBindingResult().getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.toList());
+        return new ErrorResponseEntity(22, defaultMsg.toString());
+    }
+
+    /**
+     * 单个验证参数
+     * @param ex
+     * @return
+     */
+    public ErrorResponseEntity handleViolationException(ConstraintViolationException ex) {
+        List<String> defaultMsg = ex.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+        return new ErrorResponseEntity(22,defaultMsg.toString() );
+    }
+
+    /**
+     * 捕获  BindException 异常
+     *  一般的参数绑定时抛出异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrorResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<String> defaultMsg = ex.getBindingResult().getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.toList());
+        return new ErrorResponseEntity(22, defaultMsg.toString());
+    }
     /**
      * 通用的接口映射异常处理方
      */
