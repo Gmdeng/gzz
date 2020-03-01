@@ -30,7 +30,6 @@ public class ValidatorAction {
 
     @GetMapping("/insert")
     public String insert(@Validated(value = ValidGroup.Default.class) BookVo book) {
-
         return "insert";
     }
 

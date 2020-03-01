@@ -10,9 +10,12 @@ package com.gzz.console.action;
  * 作者姓名           修改时间           版本号              描述
  */
 
+import com.gzz.console.core.ResponseResult;
 import com.gzz.console.service.UserService;
 import com.gzz.console.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +37,11 @@ public class UserAction {
     @RequestMapping("/info")
     public UserVo info(String name){
         return userService.getUser();
+    }
+
+    @GetMapping("/result")
+    public Object testResult(){
+        UserVo userVo = userService.getUser();
+        return ResponseResult.SUCCESS().message("eee").data(userVo);
     }
 }
