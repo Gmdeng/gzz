@@ -116,7 +116,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
             return new ResponseEntity<>(new ErrorResponseEntity(status.value(), "参数转换失败"), status);
         }
-        //
+        // 绑定异常
         if(ex instanceof BindException) {
             // String message =  ((BindException) ex).getAllErrors().get(0).getDefaultMessage().toString();
             return new ResponseEntity<>(new ErrorResponseEntity(status.value(),ex.getMessage()), status);

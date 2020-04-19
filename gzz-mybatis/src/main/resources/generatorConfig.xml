@@ -171,7 +171,7 @@
                    注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
                 -->
 
-        <table tableName="mi_member"
+        <table tableName="mi_login"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
