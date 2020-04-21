@@ -7,7 +7,7 @@
 		<artifactId>gzz</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.gzz.gzzmq</groupId>
+	<groupId>com.gzz.mq</groupId>
 	<artifactId>gzz-mq</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<name>gzz-mq</name>

@@ -1,0 +1,4 @@
+spring:
+  data:
+    user:
+      age: 332

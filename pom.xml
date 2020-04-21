@@ -16,7 +16,9 @@
 	<description>G-zz project for Spring Boot</description>
 	<modules>
 		<module>gzz-console</module>
+		<module>gzz-demo</module>
 		<module>gzz-mq</module>
+		<module>gzz-shiro</module>
 		<module>gzz-mybatis</module>
 		<module>gzz-redis</module>
 	</modules>

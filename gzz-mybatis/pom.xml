@@ -7,7 +7,7 @@
 		<artifactId>gzz</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.gzz.gzzmybatis</groupId>
+	<groupId>com.gzz.mybatis</groupId>
 	<artifactId>gzz-mybatis</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<name>gzz-mybatis</name>

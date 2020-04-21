@@ -13,7 +13,7 @@ spring:
     host: 127.0.0.1   # Redis服务器IP
     port: 6379        # Redis服务器连接端口
     password: passwd  # 连接密码（默认为空）
-    jedis:
+    lettuce:
       pool:
         max-active: 8   # 连接池最大连接数
         max-wait: -1ms  # 连接池最大阻塞
