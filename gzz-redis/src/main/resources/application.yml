@@ -1,6 +1,9 @@
 server:
   port: 7001
+
 spring:
+  cache:
+    type: redis # 设置缓存类型
   application:
     name: Redis-log
   profiles:

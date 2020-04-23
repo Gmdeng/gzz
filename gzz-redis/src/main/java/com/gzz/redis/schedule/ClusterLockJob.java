@@ -1,5 +1,6 @@
 package com.gzz.redis.schedule;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@EnableScheduling //启动定时任务
+//@EnableScheduling //启动定时任务
 @Component
 public class ClusterLockJob {
-    // @Autowired
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     private static String LOCK_PREFIX = "prefix_";
     private static int LOCK_EXPIRE =100;
@@ -40,6 +41,7 @@ public class ClusterLockJob {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            System.out.println("释放锁LOCK JOB");
             redisTemplate.delete(lock);
         }
 

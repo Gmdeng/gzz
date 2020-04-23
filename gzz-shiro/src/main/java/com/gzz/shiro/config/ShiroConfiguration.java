@@ -20,6 +20,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.Filter;
 import java.util.Map;
@@ -38,16 +39,16 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager, KickoutSessionFilter kickoutSessionFilter) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setLoginUrl("/login");                //登录地址
         shiroFilter.setSuccessUrl("/index");              //登录成功地址
         shiroFilter.setUnauthorizedUrl("/error");         //错误页面，认证不通过跳转
-        shiroFilter.setSecurityManager(securityManager());
+        shiroFilter.setSecurityManager(securityManager);
         //设置过滤器
         Map<String, Filter> filters = Maps.newHashMap();
         filters.put("authc", new SigninFilter());
-        filters.put("kickout", kickoutSessionFilter());
+        filters.put("kickout", kickoutSessionFilter);
         filters.put("signout", new SignoutFilter());
         shiroFilter.setFilters(filters);
 
@@ -67,11 +68,11 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(SessionManager sessionManager) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(shiroRealm());  //认证管理器
         defaultWebSecurityManager.setCacheManager(cacheManager()); //缓存管理器
-        defaultWebSecurityManager.setSessionManager(sessionManager()); // sessionManager管理器
+        defaultWebSecurityManager.setSessionManager(sessionManager); // sessionManager管理器
         return defaultWebSecurityManager;
     }
 
@@ -114,14 +115,21 @@ public class ShiroConfiguration {
         return new RedisCacheManager();
     }
 
+    @Bean
+    public RedisSessionDao redisSessionDao(RedisTemplate<String,Object> template){
+        RedisSessionDao redisSessionDao = new RedisSessionDao();
+        redisSessionDao.setRedisTemplate(template);
+        return redisSessionDao;
+    }
     /**
      * SESSION管理器
      *
      * @return
      */
-    private SessionManager sessionManager() {
+    @Bean
+    public SessionManager sessionManager(RedisSessionDao redisSessionDao) {
         RedisSessionManager redisSessionManager = new RedisSessionManager();
-        redisSessionManager.setSessionDAO(new RedisSessionDao());  //session存储的实现
+        redisSessionManager.setSessionDAO(redisSessionDao);  //session存储的实现
         redisSessionManager.setSessionIdUrlRewritingEnabled(false); //去掉URL中的JSESSIONID
         redisSessionManager.setGlobalSessionTimeout(360000L); //设置全局会话超时时间(session的失效时长)，单位毫秒(单位：毫秒)，默认为30分钟
         redisSessionManager.setDeleteInvalidSessions(true); //是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true
@@ -134,7 +142,7 @@ public class ShiroConfiguration {
     }
 
     private SimpleCookie sessionIdCookie() {
-        SimpleCookie simpleCookie = new SimpleCookie("sid");
+        SimpleCookie simpleCookie = new SimpleCookie("shiro.sesssion");
 
         simpleCookie.setPath("/");
         simpleCookie.setHttpOnly(true);
@@ -180,10 +188,11 @@ public class ShiroConfiguration {
      *
      * @return
      */
-    private KickoutSessionFilter kickoutSessionFilter() {
+    @Bean
+    public KickoutSessionFilter kickoutSessionFilter(SessionManager sessionManager) {
         KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
         kickoutSessionFilter.setMaxSession(2);
-        kickoutSessionFilter.setSessionManager(sessionManager());
+        kickoutSessionFilter.setSessionManager(sessionManager);
         return kickoutSessionFilter;
     }
 

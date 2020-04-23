@@ -81,7 +81,9 @@ public class ShiroJwtConfiguration {
     }
 
 
-    //自动创建代理，没有这个鉴权可能会出错
+    /**
+     * 自动创建代理，没有这个鉴权可能会出错
+     */
     @Bean
     public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator autoProxyCreator = new DefaultAdvisorAutoProxyCreator();

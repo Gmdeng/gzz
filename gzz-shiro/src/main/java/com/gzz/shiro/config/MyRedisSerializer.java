@@ -32,7 +32,7 @@ public class MyRedisSerializer implements RedisSerializer {
         Object obj;
         try {
             objIn = new ObjectInputStream(byteIn);
-            obj =objIn.readObject();
+            obj = objIn.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration  scan="true" scanPeriod="10 seconds" debug="false">
+<configuration  scan="true" scanPeriod="10 seconds" debug="true">
     <contextName>logback</contextName>
     <!-- 属性文件:在properties/yml文件中找到对应的配置项 -->
     <springProperty scope="context" name="logging.path" source="logging.config.path"/>

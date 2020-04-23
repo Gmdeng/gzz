@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
+import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -26,9 +28,11 @@ import javax.annotation.Resource;
 public class RedisSessionDao extends AbstractSessionDAO {
     private final Logger logger = LogManager.getLogger();
     private static final String SESSION_PREFIX = "shiro:session:";
-
-    @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate){
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 更新SESSION
@@ -99,9 +103,10 @@ public class RedisSessionDao extends AbstractSessionDAO {
     private Session getSession(Serializable id) {
         try {
             Object obj = redisTemplate.boundValueOps(getKey(id)).get();
+            // Object obj = redisTemplate.opsForValue().get(getKey(id));
             return (Session) obj;
         }catch (Exception e) {
-
+            logger.error("获取失败"+ e.getMessage());
         }
         return null;
     }
