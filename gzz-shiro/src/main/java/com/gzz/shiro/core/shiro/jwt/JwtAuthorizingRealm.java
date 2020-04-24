@@ -17,6 +17,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *
+ */
 public class JwtAuthorizingRealm extends AuthorizingRealm {
     private final Logger logger = LogManager.getLogger();
     /**
@@ -39,7 +42,7 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
          *  Claims对象它最终是一个JSON格式的对象，任何值都可以添加到其中
          *  token解密  转换成Claims对象
          */
-        Claims claims = JwtUtil.parseJWT(JWTtoken, SecretKey.JWTKey);
+        Claims claims = JwtUtil.parseJWT(JWTtoken);
 
         /**
          *   根据JwtUtil加密方法加入的参数获取数据
@@ -47,13 +50,17 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
          *   如为空：抛出异常
          *   如验证失败抛出 AuthorizationException
          */
-        String username = claims.getSubject();
-        String password =  (String) claims.get("password");
+        String username = (String) claims.get("username"); // claims.getSubject();
+        String password = (String) claims.get("password");
         SecretUser principal = null; // 从数据库获取
         return new SimpleAuthenticationInfo(principal, JWTtoken,"userRealm");
     }
 
-
+    /**
+     * 角色、权限认证
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = null;

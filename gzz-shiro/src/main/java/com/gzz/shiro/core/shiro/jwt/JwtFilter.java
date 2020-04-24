@@ -116,7 +116,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
         httpResponse.setHeader("Access-Control-Allow-Headers", httpRequest.getHeader("Access-Control-Request-Headers"));
 
-
         if (httpResponse.getHeader(HttpHeaders.ORIGIN) != null) {
             /*
             //允许所有域名的脚本访问该资源

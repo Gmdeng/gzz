@@ -1,4 +1,4 @@
-package com.gzz.shiro;
+package com.gzz.shiro.core;
 
 import java.util.HashMap;
 import java.util.Map;

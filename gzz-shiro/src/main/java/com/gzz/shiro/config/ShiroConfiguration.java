@@ -5,6 +5,8 @@ import com.gzz.shiro.core.shiro.*;
 import com.gzz.shiro.core.shiro.filter.KickoutSessionFilter;
 import com.gzz.shiro.core.shiro.filter.SigninFilter;
 import com.gzz.shiro.core.shiro.filter.SignoutFilter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -16,6 +18,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -29,10 +32,14 @@ import java.util.Map;
  * shiro 配置
  */
 @Configuration
+@AutoConfigureAfter(RedisConfiguration.class)
 public class ShiroConfiguration {
     private static final String HASH_ALGORITHM = "MD5"; // 散列算法:这里使用MD5算法;
     private static final int HASH_INTERATIONS = 21; // 散列的次数，比如散列两次，相当于 md5(md5(""))
-
+    private final Logger logger = LogManager.getLogger(LogManager.FACTORY_PROPERTY_NAME);
+    public ShiroConfiguration() {
+        logger.info("Shiro-Config 初始化。。。");
+    }
     /**
      * Filter工厂，设置对应的过滤条件和跳转条件
      *
@@ -52,8 +59,8 @@ public class ShiroConfiguration {
         filters.put("signout", new SignoutFilter());
         shiroFilter.setFilters(filters);
 
-        //
-        Map<String, String> urlMap = Maps.newHashMap();
+        // 要拦截地址。必须是有序的
+        Map<String, String> urlMap = Maps.newLinkedHashMap();
         urlMap.put("/auth/login", "authc");
         urlMap.put("/auth/logout", "signout");
         //urlMap.put("/**", "kickout,authc");
@@ -68,9 +75,9 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public SecurityManager securityManager(SessionManager sessionManager) {
+    public SecurityManager securityManager(SessionManager sessionManager, CustomAuthorizingRealm shiroRealm) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(shiroRealm());  //认证管理器
+        defaultWebSecurityManager.setRealm(shiroRealm);  //认证管理器
         defaultWebSecurityManager.setCacheManager(cacheManager()); //缓存管理器
         defaultWebSecurityManager.setSessionManager(sessionManager); // sessionManager管理器
         return defaultWebSecurityManager;
@@ -156,7 +163,8 @@ public class ShiroConfiguration {
      *
      * @return
      */
-    private RetryLimitCredentialsMatcher retryLimitCredentialsMatcher() {
+    @Bean
+    public RetryLimitCredentialsMatcher retryLimitCredentialsMatcher() {
         RetryLimitCredentialsMatcher credentialsMatcher = new RetryLimitCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName(HASH_ALGORITHM);
         credentialsMatcher.setHashIterations(HASH_INTERATIONS);
@@ -168,7 +176,8 @@ public class ShiroConfiguration {
      *
      * @return
      */
-    private CustomAuthorizingRealm shiroRealm() {
+    @Bean
+    public CustomAuthorizingRealm shiroRealm(RetryLimitCredentialsMatcher retryLimitCredentialsMatcher) {
         // 配置 Realm，需自己实现
         CustomAuthorizingRealm realm = new CustomAuthorizingRealm();
         realm.setCachingEnabled(true);
@@ -179,7 +188,7 @@ public class ShiroConfiguration {
         realm.setAuthorizationCachingEnabled(true);
         realm.setAuthorizationCacheName("authorizationCache");
         // 配置自定义密码比较器
-        realm.setCredentialsMatcher(retryLimitCredentialsMatcher());
+        realm.setCredentialsMatcher(retryLimitCredentialsMatcher);
         return realm;
     }
 
