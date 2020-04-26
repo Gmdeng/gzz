@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * http 请求响应
+ * http 请求响应统一格式
  */
 public class HttpResult extends HashMap<String, Object> {
 
@@ -22,10 +22,10 @@ public class HttpResult extends HashMap<String, Object> {
         return result(0, "成功", data);
     }
     public static HttpResult fail(){
-        return result(500, "出错");
+        return result(999, "失败");
     }
     public static HttpResult fail(String msg){
-        return result(500, msg);
+        return result(999, msg);
     }
     public static HttpResult result(Map<String, Object> map){
         HttpResult httpResult = new HttpResult();
