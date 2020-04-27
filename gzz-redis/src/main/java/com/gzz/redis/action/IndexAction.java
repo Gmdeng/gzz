@@ -46,6 +46,8 @@ public class  IndexAction {
             this.redisTemplate.opsForValue().set("HETST", "Ricky Deng");
             this.valueOperations.set("name", "Ricky");
             this.valueOperations.getAndSet("userId", "333");
+            this.redisTemplate.expire("name", 30, TimeUnit.SECONDS);
+
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,16 +60,34 @@ public class  IndexAction {
         User user = new User();
         user.setId(100000L);
         user.setName("Ricky");
-        user.setAge("99");
+        user.setAge(UUID.randomUUID().toString());
         user.setCreateTime(new Date());
-        redisTemplate.opsForValue().set(UUID.randomUUID().toString(), user, 30, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("342dde2e-aa26-4caa-8c2c-3bfe6e1bc43d", user, 30, TimeUnit.MINUTES);
         return "save data";
+    }
+
+    @GetMapping("/getUser")
+    public Object getUser() {
+
+        //redisTemplate.opsForValue().get("342dde2e-aa26-4caa-8c2c-3bfe6e1bc43d");
+        //Object obj = redisTemplate.opsForValue().get(getKey(id));
+        Object obj = redisTemplate.boundValueOps("342dde2e-aa26-4caa-8c2c-3bfe6e1bc43d").get();
+        User user = (User) obj;
+        user.setGuid(UUID.randomUUID().toString().replace("-", ""));
+        return user;
     }
 
     @GetMapping("/saveSession")
     public String saveSession() {
         SimpleSession session = new SimpleSession();
-        redisTemplate.opsForValue().set(UUID.randomUUID().toString(), session, 30, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("3bfe6e1bc43d", session, 30, TimeUnit.MINUTES);
         return "save session";
+    }
+
+    @GetMapping("/getSession")
+    public Object getSession() {
+        Object obj = redisTemplate.opsForValue().get("3bfe6e1bc43d");
+        SimpleSession session = (SimpleSession) obj;
+        return session;
     }
 }
