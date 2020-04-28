@@ -46,6 +46,14 @@ public class HttpResult extends HashMap<String, Object> {
         return httpResult;
     }
 
+    public HttpResult setData(Object data){
+        super.put("data", data);
+        return this;
+    }
+    public HttpResult setMessage(Object data){
+        super.put("msg", data);
+        return this;
+    }
     public HttpResult put(String key, Object val){
         super.put(key, val);
         return this;
