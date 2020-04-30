@@ -1,11 +1,15 @@
 package com.gzz.redis.config;
 
+import com.gzz.redis.action.IndexAction;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 @SpringBootConfiguration
 public class WebSocketConfig {
+    private final Logger logger = LogManager.getLogger(WebSocketConfig.class);
     /**
      * 给spring容器注入这个ServerEndpointExporter对象
      * 相当于xml：
@@ -19,7 +23,7 @@ public class WebSocketConfig {
      */
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {
-        System.out.println("我被注入了");
+        logger.info("我被注入了");
         return new ServerEndpointExporter();
     }
 }

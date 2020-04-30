@@ -2,7 +2,6 @@ package com.gzz.redis.component;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,11 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ServerEndpoint(value = "/ws/asset")
 @Component
 public class WebSocketServer {
+    private static Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     @PostConstruct
     public void init() {
-        System.out.println("websocket 加载");
+        logger.info("websocket 加载.....");
     }
-    private static Logger log = LoggerFactory.getLogger(WebSocketServer.class);
+
     private static final AtomicInteger OnlineCount = new AtomicInteger(0);
     // concurrent包的线程安全Set，用来存放每个客户端对应的Session对象。
     private static CopyOnWriteArraySet<Session> SessionSet = new CopyOnWriteArraySet<Session>();
@@ -34,7 +34,7 @@ public class WebSocketServer {
     public void onOpen(Session session) {
         SessionSet.add(session);
         int cnt = OnlineCount.incrementAndGet(); // 在线数加1
-        log.info("有连接加入，当前连接数为：{}", cnt);
+        logger.info("有连接加入，当前连接数为：{}", cnt);
         SendMessage(session, "连接成功");
     }
 
@@ -45,7 +45,7 @@ public class WebSocketServer {
     public void onClose(Session session) {
         SessionSet.remove(session);
         int cnt = OnlineCount.decrementAndGet();
-        log.info("有连接关闭，当前连接数为：{}", cnt);
+        logger.info("有连接关闭，当前连接数为：{}", cnt);
     }
 
     /**
@@ -56,7 +56,7 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("来自客户端的消息：{}",message);
+        logger.info("来自客户端的消息：{}",message);
         SendMessage(session, "收到消息，消息内容："+message);
 
     }
@@ -68,7 +68,7 @@ public class WebSocketServer {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("发生错误：{}，Session ID： {}",error.getMessage(),session.getId());
+        logger.error("发生错误：{}，Session ID： {}",error.getMessage(),session.getId());
         error.printStackTrace();
     }
 
@@ -82,7 +82,7 @@ public class WebSocketServer {
 //            session.getBasicRemote().sendText(String.format("%s (From Server，Session ID=%s)",message,session.getId()));
             session.getBasicRemote().sendText(message);
         } catch (IOException e) {
-            log.error("发送消息出错：{}", e.getMessage());
+            logger.error("发送消息出错：{}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -118,7 +118,7 @@ public class WebSocketServer {
             SendMessage(session, message);
         }
         else{
-            log.warn("没有找到你指定ID的会话：{}",sessionId);
+            logger.warn("没有找到你指定ID的会话：{}",sessionId);
         }
     }
 }

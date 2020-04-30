@@ -14,7 +14,6 @@ import com.gzz.console.core.ResponseResult;
 import com.gzz.console.service.UserService;
 import com.gzz.console.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

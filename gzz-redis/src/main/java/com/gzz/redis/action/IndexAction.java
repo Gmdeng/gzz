@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/")
 public class  IndexAction {
     private final Logger logger = LogManager.getLogger(LogManager.FACTORY_PROPERTY_NAME);
-
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -35,7 +34,7 @@ public class  IndexAction {
         logger.info("Hellow............................................");
 
         String basestr = Base64.getEncoder().encodeToString("我是一个好人".getBytes());
-        System.out.println(basestr);
+        logger.info("Base64: "+basestr);
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
@@ -44,12 +43,14 @@ public class  IndexAction {
 
         try {
             this.redisTemplate.opsForValue().set("HETST", "Ricky Deng");
-            this.valueOperations.set("name", "Ricky");
+            this.valueOperations.set("name", "Ricky New Test");
+            this.valueOperations.set("NewTestMAN", "Ricky New Test");
             this.valueOperations.getAndSet("userId", "333");
             this.redisTemplate.expire("name", 30, TimeUnit.SECONDS);
 
         }catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return "Hello Word";
     }
