@@ -40,6 +40,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
      * Session管理器
      */
     private SessionManager sessionManager;
+
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -48,8 +49,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
      * 是否允许访问，返回true表示允许
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
-            throws Exception {
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         return false;
     }
 

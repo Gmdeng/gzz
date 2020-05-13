@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * 认证授权
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/authjwt")
 public class AuthJwtAction {
     private final Logger logger = LogManager.getLogger();
     /**
