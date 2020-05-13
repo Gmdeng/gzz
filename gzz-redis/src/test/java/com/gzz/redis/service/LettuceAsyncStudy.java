@@ -5,6 +5,10 @@ import io.lettuce.core.RedisFuture;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.async.RedisAsyncCommands;
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.Throughput) // 吞吐量
-@Warmup(iterations = 1) // 先预热4轮
+@Warmup(iterations = 4) // 先预热4轮
 @Threads(100)
 @State(Scope.Benchmark)  // 每个测试线程分配一个实例
 @Measurement(iterations = 2, time = 600, timeUnit = TimeUnit.MILLISECONDS)  // 进行10轮测试
@@ -41,5 +45,17 @@ public class LettuceAsyncStudy {
                 e.printStackTrace();
             }
         });
+    }
+
+    /**
+     * 启动基准测试（ 测试时会比较长）
+     * @param args
+     */
+    public static void main(String[] args) throws RunnerException {
+        Options options = new OptionsBuilder()
+                // 导入要测试的类
+                .include(BenchMark.class.getSimpleName())
+                .build();
+        new Runner(options).run();
     }
 }
