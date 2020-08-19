@@ -29,6 +29,7 @@ public class IndexAction {
     @GetMapping("/saveSession")
     public String saveSession() {
         SimpleSession session = new SimpleSession();
+        session.setId(111111111111111111l);
         redisTemplate.opsForValue().set(UUID.randomUUID().toString(), session, 30, TimeUnit.MINUTES);
         return "save session";
     }
