@@ -1,6 +1,5 @@
 package com.gzz.netty.http;
 
-import com.gzz.netty.HelloServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

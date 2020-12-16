@@ -1,9 +1,6 @@
 package com.gzz.netty.readwrite;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -17,6 +14,9 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class ReadWriteClient {
     public static void main(String[] args) throws Exception {

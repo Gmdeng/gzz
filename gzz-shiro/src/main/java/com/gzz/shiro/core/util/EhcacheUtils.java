@@ -1,7 +1,6 @@
 package com.gzz.shiro.core.util;
 
 import com.alibaba.fastjson.TypeReference;
-
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.ehcache.config.CacheConfiguration;

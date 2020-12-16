@@ -1,6 +1,5 @@
 package com.gzz.shiro.listener;
 
-import org.apache.catalina.security.SecurityUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;

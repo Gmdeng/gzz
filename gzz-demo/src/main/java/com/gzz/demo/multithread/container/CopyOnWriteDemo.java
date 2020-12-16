@@ -1,6 +1,5 @@
 package com.gzz.demo.multithread.container;
 
-import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CopyOnWriteDemo {

@@ -1,12 +1,13 @@
 package com.gzz.mybatis.dao;
 
 import com.gzz.mybatis.pojo.MiLogin;
+import com.gzz.mybatis.pojo.MiLoginExample;
 import com.gzz.mybatis.pojo.MiLoginExample.Criteria;
 import com.gzz.mybatis.pojo.MiLoginExample.Criterion;
-import com.gzz.mybatis.pojo.MiLoginExample;
+import org.apache.ibatis.jdbc.SQL;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.jdbc.SQL;
 
 public class MiLoginSqlProvider {
 

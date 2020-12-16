@@ -1,8 +1,7 @@
 package com.gzz.socket;
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 public class App {
     private final static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
