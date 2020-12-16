@@ -45,14 +45,14 @@ public class SocketClientTest {
         // 添加消息事件监听, 见SocketMessageTest类
         client.setSocketMessage(SocketMessageTest.class);
         // 打开客户端
-        client.open();
+        //client.open();
     }
 
     // 模拟接口调用发送消息
     private void API() {
         // 消息队列 按照先进先出原则推送
-        client.setMessage(SocketMessageTest.MESSAGES_INT)
+        client.setMessage(SocketMessageTest.MESSAGES_INT);
                 // 立即发送
-                .send();
+                //.send();
     }
 }

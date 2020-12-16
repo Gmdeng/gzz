@@ -16,9 +16,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <log4j2.version>2.14.0</log4j2.version>
   </properties>
 
   <dependencies>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
       <dependency>
           <groupId>com.github.javafaker</groupId>
           <artifactId>javafaker</artifactId>
