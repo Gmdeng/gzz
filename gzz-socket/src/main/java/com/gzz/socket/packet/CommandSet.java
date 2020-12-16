@@ -29,9 +29,9 @@ public class CommandSet {
     }
 
     // 获取当前指令
-    public String getCommad(){
+    public String getCommand(){
         String cmd = "END";
-        if(commands.size()>= index){
+        if (commands.size() >= index){
             cmd = commands.get(index);
             this.index ++;
         }
@@ -43,14 +43,19 @@ public class CommandSet {
     }
     // 有
     public boolean hasNext(){
-        if(commands == null||commands.size() <= index) return false;
+        if (commands == null || commands.size() <= index) return false;
         return true;
     }
 
     // 是否最后一条
     public boolean isLast(){
         if (commands == null)  return true;
-        if(commands.size() < index) return true;
+        if (commands.size() < index) return true;
         return false;
+    }
+
+    // 复位指令
+    public void reset(){
+        this.index = 0;
     }
 }

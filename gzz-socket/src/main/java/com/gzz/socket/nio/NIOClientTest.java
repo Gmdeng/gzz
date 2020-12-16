@@ -45,8 +45,9 @@ public class NIOClientTest {
                 // 写入心跳信息，然后变更监听为 可读，即等待读取服务端 回执
                 if (key.isWritable()) {
                     SocketChannel channel = (SocketChannel) key.channel();
-                    byte[] heatBeat = {(byte) 0xff,(byte) 0xFF, (byte) 0xbb};
-                    channel.write(ByteBuffer.wrap(heatBeat));
+                    //byte[] heatBeat = {(byte) 0xff,(byte) 0xFF, (byte) 0xbb};
+                    String heatBeat = "im100000001";
+                    channel.write(ByteBuffer.wrap(heatBeat.getBytes()));
                     // channel.write(ByteBuffer.wrap("heartBeatClient_1__END".getBytes()));
                     key.interestOps(SelectionKey.OP_READ);
                 }
