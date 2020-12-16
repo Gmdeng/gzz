@@ -1,6 +1,5 @@
 package com.gzz.socket;
 
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class App {

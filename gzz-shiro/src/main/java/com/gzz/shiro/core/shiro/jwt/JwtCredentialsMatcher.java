@@ -8,7 +8,6 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class JwtCredentialsMatcher implements CredentialsMatcher {
     private final Logger logger = LogManager.getLogger();
