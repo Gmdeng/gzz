@@ -25,10 +25,9 @@ public class NIOServer {
     private static final AtomicInteger handleDataNo=new AtomicInteger(0);
     private static final AtomicInteger resDataNo=new AtomicInteger(0);
 
-    private final static String HOST=  "192.168.100.129";
+    private final static String HOST=  "localhost";
     private final static int PORT=  9988;
     public static void main(String[] args) {
-        //ServerSocketChannel serverSocketChannel = null;
         ServerSocket serverSocket = null;
         Selector selector = null;
         //工厂方法创建ServerSocketChannel
@@ -87,7 +86,8 @@ public class NIOServer {
                             if( selectionKey != null ) {
                                 //使这个SelectionKey失效, 使得Selector不再监控这个SelectionKey感兴趣的事件
                                 selectionKey.cancel();
-                                selectionKey.channel().close(); //关闭与这个SelectionKey关联的SocketChannel
+                                //关闭与这个SelectionKey关联的SocketChannel
+                                selectionKey.channel().close();
                             }
                         }
                         catch( Exception ex )

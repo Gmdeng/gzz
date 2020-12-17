@@ -41,7 +41,7 @@ public class NIOServerHandler {
         byte[] data = new byte[readLen];
         readBuff.get(data, 0, readLen);
         readBuff.clear();//每次清空 对应上面flip()
-       log.info("receive收到数据包{}：{}",readLen, new String(data));
+       //log.info("receive收到数据包[{}]：{}",readLen, new String(data));
         ReqData reqData = new ReqData(data);
         if(reqData.isHeartBeat()){
             log.info("receive收到是心跳包：");
@@ -96,16 +96,16 @@ public class NIOServerHandler {
         SocketChannel socketChannel = (SocketChannel)key.channel();
         log.info("是否最后一个指令： {}",  commandSet.isLast());
         if(commandSet.hasNext()) {
-            String sendStr = commandSet.getCommad() + Math.random();
+            String sendCMD = commandSet.getCommand() + Math.random();
             //ByteBuffer send = ByteBuffer.wrap(sendStr.getBytes());
             ByteBuffer buf = ByteBuffer.allocate(1024);
             buf.clear();
-            buf.put(sendStr.getBytes());
+            buf.put(sendCMD.getBytes());
             buf.flip();
             while (buf.hasRemaining()) {
                 socketChannel.write(buf);
             }
-            log.info("响应数据["+ sendStr +"]到【"+socketChannel.getRemoteAddress()+"】");
+            log.info("响应数据["+ sendCMD +"]到【"+socketChannel.getRemoteAddress()+"】");
             socketChannel.register(selector, SelectionKey.OP_READ, commandSet);
         }else{
             socketChannel.shutdownInput();
