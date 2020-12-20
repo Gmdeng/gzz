@@ -1,12 +1,12 @@
 package com.gzz.socket.nio;
 
-import com.gzz.socket.packet.CommandSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -27,9 +27,15 @@ public class NIOServer {
 
     private final static String HOST=  "localhost";
     private final static int PORT=  9988;
-    public static void main(String[] args) {
+
+    Selector selector = null;
+    /**
+     *
+     * @throws SocketException
+     */
+    public NIOServer() throws SocketException {
         ServerSocket serverSocket = null;
-        Selector selector = null;
+
         //工厂方法创建ServerSocketChannel
         try(ServerSocketChannel ssChannel = ServerSocketChannel.open()) {
 
@@ -48,61 +54,75 @@ public class NIOServer {
 
             //通道注册选择器，接受连接就绪状态。
             ssChannel.register(selector, SelectionKey.OP_ACCEPT);
-
-            // 监听 循环检查
-            while (true) {
-                log.info("NIO服务等待接收数据... ");
-                //阻塞检查，当有就绪状态发生，返回键集合.
-                // select(timeout) 为非阻塞的。
-                if(selector.select()==0){
-                    continue;
-                }
-               log.info("第【{}】轮监听===============================================", selectorNos.incrementAndGet());
-                //获得Selector的selected-keys集合
-                Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                Iterator it = selectedKeys.iterator();
-                while (it.hasNext()) {
-                    SelectionKey selectionKey = null;
-                    try {
-                        selectionKey = (SelectionKey) it.next();
-                        //把SelectionKey从Selector的selected-key集合中删除
-                        it.remove();
-                        // 处理IO事件
-                        //处理接收连接就绪事件;
-                        if (selectionKey.isAcceptable()) {
-                            NIOServerHandler.acceptHandle(selector, selectionKey);
-                        }
-                        //处理读就绪事件;
-                        else if (selectionKey.isReadable()) {
-                            NIOServerHandler.receiveHandle(selector, selectionKey);
-                        }
-                        //处理写就绪事件;
-                        else if (selectionKey.isWritable()) {
-                             NIOServerHandler.sendHandle(selector,selectionKey);
-                        }
-
-                    }catch(IOException iox){
-                        try {
-                            if( selectionKey != null ) {
-                                //使这个SelectionKey失效, 使得Selector不再监控这个SelectionKey感兴趣的事件
-                                selectionKey.cancel();
-                                //关闭与这个SelectionKey关联的SocketChannel
-                                selectionKey.channel().close();
-                            }
-                        }
-                        catch( Exception ex )
-                        {
-                            ex.printStackTrace();
-                        }
-                    }
-
-                }
-            }
-
         }catch (Exception e){
             log.error("断哦嘎：{}" , e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 服务监听中
+     * 多路复用
+     * @throws IOException
+     */
+    public void listen() throws IOException {
+        log.info("NIO服务监听中， 等待接收数据... ");
+        // 监听 循环检查
+        //阻塞检查，当有就绪状态发生，返回键集合.
+        // select(timeout) 为非阻塞的。
+        while (selector.select() > 0) {
+            log.info("第【{}】轮监听===============================================", selectorNos.incrementAndGet());
+            //获得Selector的selected-keys集合
+            Set<SelectionKey> selectedKeys = selector.selectedKeys();
+            Iterator it = selectedKeys.iterator();
+            while (it.hasNext()) {
+                SelectionKey selectionKey = null;
+                try {
+                    selectionKey = (SelectionKey) it.next();
+                    //把SelectionKey从Selector的selected-key集合中删除
+                    it.remove();
+                    // 处理IO事件
+                    //处理接收连接就绪事件;
+                    if (selectionKey.isAcceptable()) {
+                        NIOServerHandler.acceptHandle(selector, selectionKey);
+                    }
+                    //处理读就绪事件;
+                    else if (selectionKey.isReadable()) {
+                        NIOServerHandler.receiveHandle(selector, selectionKey);
+                    }
+                    //处理写就绪事件;
+                    else if (selectionKey.isWritable()) {
+                        NIOServerHandler.sendHandle(selector,selectionKey);
+                    }
+
+                }catch(IOException iox){
+                    try {
+                        if( selectionKey != null ) {
+                            //使这个SelectionKey失效, 使得Selector不再监控这个SelectionKey感兴趣的事件
+                            selectionKey.cancel();
+                            //关闭与这个SelectionKey关联的SocketChannel
+                            selectionKey.channel().close();
+                        }
+                    }
+                    catch( Exception ex )
+                    {
+                        ex.printStackTrace();
+                    }
+                }
+
+            }
+        }
+    }
+    public static void main(String[] args) {
+
+        try {
+            NIOServer serv = new NIOServer();
+            serv.listen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void handleAdv(){

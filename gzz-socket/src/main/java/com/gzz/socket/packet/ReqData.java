@@ -1,12 +1,10 @@
 package com.gzz.socket.packet;
 
 
-import com.gzz.socket.nio.NIOServerHandler;
 import com.gzz.socket.utils.ByteUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Arrays;
 
 /**
  * 请求数据处理
@@ -24,12 +22,13 @@ public class ReqData {
     public ReqData(byte[] data){
         log.info("数据包：{}", ByteUtil.dumpHex(data));
         String dest = new String(data);
-        if(HEART_BEAT.equalsIgnoreCase(dest)){
-            this.isHeartBeat = true;
-        }
-        if(dest.contains(REG_HEAD)){
+        // 是否心跳包
+        this.isHeartBeat = HEART_BEAT.equalsIgnoreCase(dest);
+        // 是否注册包
+        if(StringUtils.startsWith(dest, REG_HEAD)){
             this.isRegister = true;
         }
+
 
 //        if((data[0]&0xff) == 0xff){
 //            //System.out.println("data = " + "相等的");

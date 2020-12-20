@@ -9,7 +9,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -25,8 +24,8 @@ public class NIOClientTest {
         socketChannel.register(selector, SelectionKey.OP_CONNECT);
         // 发起连接
         socketChannel.connect(new InetSocketAddress("127.0.0.1", 9988));
-        while (true) {
-            selector.select();
+        while (selector.select() > 0) {
+
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             if (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
