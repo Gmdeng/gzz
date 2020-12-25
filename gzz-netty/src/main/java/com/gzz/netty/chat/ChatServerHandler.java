@@ -6,6 +6,10 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+/**
+ * 一个最常用的Handler。这个Handler的作用就是处理接收到数据时的事件，
+ * 也就是说，我们的业务逻辑一般就是写在这个Handler里面的，ChannelInboundHandler就是用来处理我们的核心业务逻辑。
+ */
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     // 所有的活动用户
@@ -13,6 +17,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     /**
      * 读取消息通道
+     * 当收到对方发来的数据后，就会触发，参数msg就是发来的信息，可以是基础类型，也可以是序列化的复杂对象。
      * @param ctx
      * @param msg
      * @throws Exception
@@ -56,6 +61,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     /**
      * 在建立连接时发送消息
+     * 通道激活时触发，当客户端connect成功后，服务端就会接收到这个事件，从而可以把客户端的Channel记录下来，供后面复用
      * @param ctx
      * @throws Exception
      */
@@ -78,6 +84,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     /**
      * 异常捕获
+     * 出错时会触发，做一些错误处理
      * @param ctx
      * @param cause
      * @throws Exception

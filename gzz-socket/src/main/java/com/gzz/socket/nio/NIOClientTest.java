@@ -11,11 +11,19 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ *
+ */
 public class NIOClientTest {
-
     private final static Logger log = LogManager.getLogger(NIOClientTest.class);
+    private final static String SERV_HOST=  "localhost";
+    private final static int SERV_PORT=  9988;
+    private static final AtomicInteger handleDataNo =new AtomicInteger(0);
+
     public static void main(String[] args) throws IOException, InterruptedException {
+        String clentId = "clent2_";
         // 初始化客户端Socket
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
@@ -23,9 +31,8 @@ public class NIOClientTest {
         // 注册连接成功事件监听
         socketChannel.register(selector, SelectionKey.OP_CONNECT);
         // 发起连接
-        socketChannel.connect(new InetSocketAddress("127.0.0.1", 9988));
+        socketChannel.connect(new InetSocketAddress(SERV_HOST, SERV_PORT));
         while (selector.select() > 0) {
-
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             if (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
@@ -44,8 +51,9 @@ public class NIOClientTest {
                 // 写入心跳信息，然后变更监听为 可读，即等待读取服务端 回执
                 if (key.isWritable()) {
                     SocketChannel channel = (SocketChannel) key.channel();
-                    //byte[] heatBeat = {(byte) 0xff,(byte) 0xFF, (byte) 0xbb};
-                    String heatBeat = "im100000001";
+                    // byte[] heatBeat = {(byte) 0xff,(byte) 0xFF, (byte) 0xbb};
+                    // String heatBeat = "im100000001";
+                    String heatBeat = clentId + handleDataNo.incrementAndGet() ;
                     channel.write(ByteBuffer.wrap(heatBeat.getBytes()));
                     // channel.write(ByteBuffer.wrap("heartBeatClient_1__END".getBytes()));
                     key.interestOps(SelectionKey.OP_READ);

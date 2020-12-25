@@ -49,6 +49,7 @@ public class NIOServerHandler {
         }else{
             // TODO 获取数据后业务处理
             if(commandSet.isNew()){
+                commandSet.setOwnerId(new String(data));
                 log.info("receive 设置请求指令");
                 List<String> commandList = new ArrayList<>();
                 commandList.add("Hello Word..");
@@ -88,7 +89,7 @@ public class NIOServerHandler {
      * @param key
      * @throws IOException
      */
-    public static void sendHandle(Selector selector,SelectionKey key) throws IOException {
+    public static void sendHandle(final Selector selector,SelectionKey key) throws IOException {
         log.info("send发送数据处理。。。。");
         //获得与SelectionKey关联的附件
         CommandSet commandSet = (CommandSet)key.attachment();
@@ -96,7 +97,7 @@ public class NIOServerHandler {
         SocketChannel socketChannel = (SocketChannel)key.channel();
         log.info("是否最后一个指令： {}",  commandSet.isLast());
         if(commandSet.hasNext()) {
-            String sendCMD = commandSet.getCommand() + Math.random();
+            String sendCMD = commandSet.getOwnerId() + commandSet.getCommand() + Math.random();
             //ByteBuffer send = ByteBuffer.wrap(sendStr.getBytes());
             ByteBuffer buf = ByteBuffer.allocate(1024);
             buf.clear();
@@ -122,17 +123,22 @@ public class NIOServerHandler {
      * @param key
      * @throws IOException
      */
-    public static void acceptHandle(Selector selector, SelectionKey key) throws IOException {
+    public static void acceptHandle(final Selector selector, SelectionKey key) throws IOException {
         log.info("Accept 注册");
-        //获得与SelectionKey关联的SocketChannel
-        ServerSocketChannel sersverSocketChannel = (ServerSocketChannel)key.channel();
-        //就绪后的操作，刚到达的socket句柄
-        SocketChannel socketChannel = sersverSocketChannel.accept();
-        //需要和ServerSocketChannel一样。。
-        socketChannel.configureBlocking(false);
-        log.info("Accept  收到了来自于【{}】的连接请求", socketChannel.getRemoteAddress());
-        // 注意！不要注册SelectionKey.OP_WRITE.否则每次都能select到它，性能降低。
-        // socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-        socketChannel.register(selector, SelectionKey.OP_READ,  new CommandSet());
+        if(key.isValid()) {
+            //获得与SelectionKey关联的SocketChannel
+            ServerSocketChannel sersverSocketChannel = (ServerSocketChannel) key.channel();
+
+            //，就绪后的操作，刚到达的socket句柄
+            SocketChannel socketChannel = sersverSocketChannel.accept();
+
+            //设客户端连接为非阻塞，需要和ServerSocketChannel一样。。
+            socketChannel.configureBlocking(false);
+            socketChannel.socket().setReuseAddress(true);
+            log.info("Accept  收到了来自于【{}】的连接请求", socketChannel.getRemoteAddress());
+            // 注意！不要注册SelectionKey.OP_WRITE.否则每次都能select到它，性能降低。
+            // socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+            socketChannel.register(selector, SelectionKey.OP_READ, new CommandSet());
+        }
     }
 }
