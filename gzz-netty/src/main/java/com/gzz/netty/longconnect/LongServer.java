@@ -18,16 +18,15 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 /**
  * netty实现客户端与服务端长连接
  * WEBSOCKET
- *
  */
 public class LongServer {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,workGroup)
+            serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new LongServerInitailizer());

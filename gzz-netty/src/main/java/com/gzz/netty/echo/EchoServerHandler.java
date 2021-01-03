@@ -1,9 +1,12 @@
 package com.gzz.netty.echo;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
 import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by Administrator on 2017/5/16.
  * ChannelInboundHandlerAdapter extends ChannelHandlerAdapter 用于对网络事件进行读写操作
@@ -13,6 +16,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
      * 因为多线程，所以使用原子操作类来进行计数
      */
     private static AtomicInteger atomicInteger = new AtomicInteger();
+
     /**
      * 收到客户端消息，自动触发
      *
@@ -42,6 +46,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
          */
         ctx.writeAndFlush(respByteBuf);
     }
+
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         System.out.println("-----客户端关闭:" + ctx.channel().remoteAddress());

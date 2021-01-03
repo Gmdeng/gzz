@@ -1,6 +1,5 @@
 package com.gzz.netty.http;
 
-import com.gzz.netty.HelloServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,7 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
  * HTTP服务器
@@ -23,7 +26,7 @@ public class HttpServer {
         EventLoopGroup workGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,workGroup)
+            serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new HttpServerinitializer());
 
@@ -41,13 +44,20 @@ public class HttpServer {
     /**
      *
      */
-    private static class HttpServerinitializer extends ChannelInitializer<SocketChannel>{
+    private static class HttpServerinitializer extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            ChannelPipeline pipeline =socketChannel.pipeline();
+            ChannelPipeline pipe = socketChannel.pipeline();
             //编码解码合二为一
-            pipeline.addLast("httpServerCodec",new HttpServerCodec());
-            pipeline.addLast("httpServerHandler",new HttpServerHandler());
+            pipe.addLast("httpServerCodec", new HttpServerCodec());
+            pipe.addLast("httpServerHandler", new HttpServerHandler());
+
+            pipe.addLast("http-decoder", new HttpRequestDecoder());
+            pipe.addLast("http-aggregator", new HttpObjectAggregator(65536));
+            pipe.addLast("http-encoder", new HttpResponseEncoder());
+            pipe.addLast("http-chunked", new ChunkedWriteHandler());
+            pipe.addLast("fileServerHandler", new ChunkedWriteHandler());
+
         }
 
     }

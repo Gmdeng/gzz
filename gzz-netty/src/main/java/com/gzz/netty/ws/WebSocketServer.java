@@ -1,4 +1,5 @@
 package com.gzz.netty.ws;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -16,13 +17,12 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  * 用于和客户端进行连接
  *
  * @author phubing
- *
  */
 public class WebSocketServer {
     public static void main(String[] args) throws InterruptedException {
         //定义线程组
-        EventLoopGroup mainGroup =  new NioEventLoopGroup();
-        EventLoopGroup subGroup =  new NioEventLoopGroup();
+        EventLoopGroup mainGroup = new NioEventLoopGroup();
+        EventLoopGroup subGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap server = new ServerBootstrap();
             server.group(mainGroup, subGroup)
@@ -69,7 +69,7 @@ public class WebSocketServer {
             //针对channelFuture，进行相应的监听
             channelFuture.channel().closeFuture().sync();
 
-        }finally {
+        } finally {
             //针对两个group进行优雅地关闭
             mainGroup.shutdownGracefully();
             subGroup.shutdownGracefully();

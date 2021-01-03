@@ -18,13 +18,13 @@ import java.util.concurrent.TimeUnit;
  * 读写检测
  */
 public class ReadWriteServer {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,workGroup)
+            serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ReadWriteServerInitailizer());
@@ -42,7 +42,7 @@ public class ReadWriteServer {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
             ChannelPipeline pipeline = ch.pipeline();
-            pipeline.addLast(new IdleStateHandler(5,7,10, TimeUnit.SECONDS));
+            pipeline.addLast(new IdleStateHandler(5, 7, 10, TimeUnit.SECONDS));
             pipeline.addLast(new ReadWriteServerHandler());
         }
     }

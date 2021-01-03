@@ -1,0 +1,2623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzz.mybatis.dao.MiLoginMapper">
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_code" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_code, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, safe_passwd, update_on, update_by, create_on, create_by
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_code, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, safe_passwd, 
+      update_on, update_by, create_on, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{memberCode,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{safePasswd,jdbcType=VARCHAR}, 
+      #{updateOn,jdbcType=INTEGER}, #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        member_code = #{record.memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_code = #{record.memberCode,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_code = #{memberCode,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_no, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, update_on, update_by, create_on, create_by, safe_passwd
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_no, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, update_on, 
+      update_by, create_on, create_by, 
+      safe_passwd)
+    values (#{id,jdbcType=BIGINT}, #{memberNo,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{updateOn,jdbcType=INTEGER}, 
+      #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{safePasswd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberNo != null">
+        member_no,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberNo != null">
+        member_no = #{record.memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_no = #{record.memberNo,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberNo != null">
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_no = #{memberNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_code, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, update_on, update_by, create_on, create_by, safe_passwd
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_code, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, update_on, 
+      update_by, create_on, create_by, 
+      safe_passwd)
+    values (#{id,jdbcType=BIGINT}, #{memberCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{updateOn,jdbcType=INTEGER}, 
+      #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{safePasswd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        member_code = #{record.memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_code = #{record.memberCode,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_code = #{memberCode,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_code, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, safe_passwd, update_on, update_by, create_on, create_by
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_code, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, safe_passwd, 
+      update_on, update_by, create_on, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{memberCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{safePasswd,jdbcType=VARCHAR}, 
+      #{updateOn,jdbcType=INTEGER}, #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        member_code = #{record.memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_code = #{record.memberCode,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_code = #{memberCode,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_code" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_code, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, safe_passwd, update_on, update_by, create_on, create_by
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_code, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, safe_passwd, 
+      update_on, update_by, create_on, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{memberCode,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{safePasswd,jdbcType=VARCHAR}, 
+      #{updateOn,jdbcType=INTEGER}, #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        member_code = #{record.memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_code = #{record.memberCode,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_code = #{memberCode,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="com.gzz.mybatis.pojo.MiLogin">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="member_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="allow_ipaddr" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="notes" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="change_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="safe_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="update_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_on" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_code, user_id, passwd, login_on, login_num, login_ipaddr, allow_ipaddr, 
+    status, notes, change_on, safe_passwd, update_on, update_by, create_on, create_by
+  </sql>
+  <select id="selectByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mi_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample">
+    delete from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login (id, member_code, user_id, 
+      passwd, login_on, login_num, 
+      login_ipaddr, allow_ipaddr, status, 
+      notes, change_on, safe_passwd, 
+      update_on, update_by, create_on, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{memberCode,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{loginOn,jdbcType=INTEGER}, #{loginNum,jdbcType=INTEGER}, 
+      #{loginIpaddr,jdbcType=VARCHAR}, #{allowIpaddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR}, #{changeOn,jdbcType=INTEGER}, #{safePasswd,jdbcType=VARCHAR}, 
+      #{updateOn,jdbcType=INTEGER}, #{updateBy,jdbcType=VARCHAR}, #{createOn,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    insert into mi_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="loginOn != null">
+        login_on,
+      </if>
+      <if test="loginNum != null">
+        login_num,
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr,
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="changeOn != null">
+        change_on,
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd,
+      </if>
+      <if test="updateOn != null">
+        update_on,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createOn != null">
+        create_on,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultType="java.lang.Long">
+    select count(*) from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mi_login
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        member_code = #{record.memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginOn != null">
+        login_on = #{record.loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginNum != null">
+        login_num = #{record.loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginIpaddr != null">
+        login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowIpaddr != null">
+        allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeOn != null">
+        change_on = #{record.changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.safePasswd != null">
+        safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateOn != null">
+        update_on = #{record.updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOn != null">
+        create_on = #{record.createOn,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mi_login
+    set id = #{record.id,jdbcType=BIGINT},
+      member_code = #{record.memberCode,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      login_on = #{record.loginOn,jdbcType=INTEGER},
+      login_num = #{record.loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{record.loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{record.allowIpaddr,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      change_on = #{record.changeOn,jdbcType=INTEGER},
+      safe_passwd = #{record.safePasswd,jdbcType=VARCHAR},
+      update_on = #{record.updateOn,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      create_on = #{record.createOn,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    <set>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="loginOn != null">
+        login_on = #{loginOn,jdbcType=INTEGER},
+      </if>
+      <if test="loginNum != null">
+        login_num = #{loginNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginIpaddr != null">
+        login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="allowIpaddr != null">
+        allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="changeOn != null">
+        change_on = #{changeOn,jdbcType=INTEGER},
+      </if>
+      <if test="safePasswd != null">
+        safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        update_on = #{updateOn,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        create_on = #{createOn,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzz.mybatis.pojo.MiLogin">
+    update mi_login
+    set member_code = #{memberCode,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      login_on = #{loginOn,jdbcType=INTEGER},
+      login_num = #{loginNum,jdbcType=INTEGER},
+      login_ipaddr = #{loginIpaddr,jdbcType=VARCHAR},
+      allow_ipaddr = #{allowIpaddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR},
+      change_on = #{changeOn,jdbcType=INTEGER},
+      safe_passwd = #{safePasswd,jdbcType=VARCHAR},
+      update_on = #{updateOn,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_on = #{createOn,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gzz.mybatis.pojo.MiLoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mi_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

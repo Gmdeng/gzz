@@ -1,4 +1,5 @@
 package com.gzz.netty.echo;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -13,6 +14,7 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+
 /**
  * Echo 服务器
  * LineBasedFrameDecoder 行解码器，回车换行符解决 TCP 粘包
@@ -22,6 +24,7 @@ public class EchoServer {
         int port = 9898;
         new EchoServer().bind(port);
     }
+
     public void bind(int port) {
         /**
          * interface EventLoopGroup extends EventExecutorGroup extends ScheduledExecutorService extends ExecutorService

@@ -18,22 +18,23 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class CahtClient {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup)
                     .channel(NioSocketChannel.class)
                     .handler(new CahtClientInitailizer());
-            Channel channel = bootstrap.connect("localhost",8899).channel();
+            Channel channel = bootstrap.connect("localhost", 8899).channel();
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            for(;;){
-                channel.writeAndFlush(br.readLine()+"\r\n");
+            for (; ; ) {
+                channel.writeAndFlush(br.readLine() + "\r\n");
             }
-        }finally {
+        } finally {
             eventLoopGroup.shutdownGracefully();
         }
     }
+
     public static class CahtClientInitailizer extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {

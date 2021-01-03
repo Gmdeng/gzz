@@ -1,11 +1,11 @@
 package com.gzz.netty.time;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2017/5/17.
@@ -33,7 +33,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
              * System.getProperty("line.separator");屏蔽了 Windows和Linux的区别
              * windows 系统上回车换行符 "\n",Linux 上是 "/n"
              */
-            String reqMsg = "我是客户端 "+ (i + 1)  + Thread.currentThread().getName() + System.getProperty("line.separator");
+            String reqMsg = "我是客户端 " + (i + 1) + Thread.currentThread().getName() + System.getProperty("line.separator");
             byte[] reqMsgByte = reqMsg.getBytes("UTF-8");
             ByteBuf reqByteBuf = Unpooled.buffer(reqMsgByte.length);
 
@@ -59,10 +59,10 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         /**
          * 未添加解码器需要这里处理
-        ByteBuf buf = (ByteBuf) msg;
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
+         ByteBuf buf = (ByteBuf) msg;
+         byte[] req = new byte[buf.readableBytes()];
+         buf.readBytes(req);
+         String body = new String(req, "UTF-8");
          */
 
         /**

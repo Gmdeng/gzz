@@ -1,4 +1,5 @@
 package com.gzz.netty.time;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -33,7 +34,12 @@ public class TimeServer {
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .childHandler(new ChildChannelHandler());
 
-            /**服务器启动辅助类配置完成后，调用 bind 方法绑定监听端口，调用 sync 方法同步等待绑定操作完成*/
+            /**
+             * 绑定端口，同步等待成功
+             * 服务器启动辅助类配置完成后，
+             * 调用 bind 方法绑定监听端口，
+             * 调用 sync 方法同步等待绑定操作完成
+             * */
             ChannelFuture f = b.bind(port).sync();
 
             System.out.println(Thread.currentThread().getName() + ",服务器开始监听端口，等待客户端连接.........");

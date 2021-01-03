@@ -5,7 +5,6 @@ import com.gzz.shiro.core.shiro.jwt.SecretUser;
 import io.jsonwebtoken.Claims;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TestJwtUtil {

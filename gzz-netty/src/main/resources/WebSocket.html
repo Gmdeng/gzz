@@ -37,14 +37,15 @@
         }
     }
 
+
 </script>
 
 <form onsubmit="return false">
     <textarea name="message" style="width: 400px;height: 200px"></textarea>
-    <input type="button" value="发消息" onclick="send(this.form.message.value)">
+    <input onclick="send(this.form.message.value)" type="button" value="发消息">
     <h3>服务器输出：</h3>
     <textarea id="responseText" style="width: 400px;height: 200px"></textarea>
-    <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空消息">
+    <input onclick="javascript:document.getElementById('responseText').value=''" type="button" value="清空消息">
 </form>
 
 </body>

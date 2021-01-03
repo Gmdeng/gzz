@@ -21,11 +21,11 @@ public class SocketServer {
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,workGroup).channel(NioServerSocketChannel.class).
+            serverBootstrap.group(bossGroup, workGroup).channel(NioServerSocketChannel.class).
                     childHandler(new SocketServerInitailizer());
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
             channelFuture.channel().closeFuture().sync();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             bossGroup.shutdownGracefully();
@@ -40,7 +40,7 @@ public class SocketServer {
         @Override
         protected void initChannel(SocketChannel socketChannel) {
             ChannelPipeline pipeline = socketChannel.pipeline();
-            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,0,4,0,4));
+            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
             pipeline.addLast(new LengthFieldPrepender(4));
             pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
             pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));

@@ -1,9 +1,9 @@
 package com.gzz.netty.socket;
 
-import java.util.Date;
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import java.util.Date;
 
 public class SocketClientHandler extends SimpleChannelInboundHandler<String> {
     @Override

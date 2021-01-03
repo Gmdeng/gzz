@@ -1,4 +1,5 @@
 package com.gzz.netty.echo;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -11,9 +12,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+
 /**
  * Echo 客户端
- *  LineBasedFrameDecoder 行解码器，回车换行符解决 TCP 粘包
+ * LineBasedFrameDecoder 行解码器，回车换行符解决 TCP 粘包
  */
 public class EchoClient {
     /**
@@ -26,11 +28,13 @@ public class EchoClient {
             new Thread(new MyThread()).start();
         }
     }
+
     static class MyThread implements Runnable {
         @Override
         public void run() {
             connect("192.168.1.20", 9898);
         }
+
         public void connect(String host, int port) {
             /**配置客户端 NIO 线程组/池*/
             EventLoopGroup group = new NioEventLoopGroup();

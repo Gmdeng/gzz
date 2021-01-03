@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 public class TSocketChannelOpt {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 8888;
+    private static final int PORT = 9988;
 
     private static ExecutorService read = Executors.newFixedThreadPool(5);
     private static ExecutorService write = Executors.newFixedThreadPool(5);

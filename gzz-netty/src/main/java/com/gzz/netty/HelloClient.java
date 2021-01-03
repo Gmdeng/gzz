@@ -1,13 +1,13 @@
 package com.gzz.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
-import java.nio.channels.Channels;
-import java.util.concurrent.Executors;
 
 /**
  * Netty 客户端代码
@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 public class HelloClient {
     private static final String host = "127.0.0.1";
     private static final int port = 8888;
+
     public static void main(String[] args) {
 
 
