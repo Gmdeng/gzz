@@ -8,8 +8,5 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
 
     }
-    @Override
-    public void messageReceived(ChannelHandlerContext channelHandlerContext, Object o)throws Exception {
 
-    }
 }
