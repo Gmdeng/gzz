@@ -9,7 +9,7 @@ public class HttpServerFileHandler extends SimpleChannelInboundHandler<FullHttpR
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) throws Exception {
         if(req.getDecoderResult().isSuccess()){
-            sendError(ctx, BAD_)
+            // sendError(ctx, BAD_)
         }
     }
 }
